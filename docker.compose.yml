@@ -1,1 +1,13 @@
 version: '3.9'
+
+volumes:
+  redis_volume:
+
+services: 
+  redis_cache: 
+    image: redis:8.0-M02-alpine
+    volumes:
+      - redis_volume:/data
+    ports: 
+      - "6379:6379"
+    command: "redis-server --save 60 1 --loglevel warning"

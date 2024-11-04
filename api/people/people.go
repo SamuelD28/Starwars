@@ -68,7 +68,11 @@ var GraphqlQueries = graphql.Fields{
 			}
 
 			url := core.SwapiUrl + "/people/" + strconv.Itoa(id)
-			content, _ := core.GetOrFetch(url, p.Context, *core.RedisClient, 0)
+			content, err := core.GetOrFetch(url, p.Context, *core.RedisClient, 0)
+
+			if err != nil {
+				return nil, err
+			}
 
 			var peopleSwapi PeopleSwapi
 			parsingErr := json.Unmarshal([]byte(content), &peopleSwapi)

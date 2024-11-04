@@ -67,7 +67,11 @@ func GetOrFetch(
 	client redis.Client,
 	expiration time.Duration,
 ) (string, error) {
-	content, _ := client.Get(context, url).Result()
+	content, cacheErr := client.Get(context, url).Result()
+
+	if cacheErr != nil {
+		return "", cacheErr
+	}
 
 	if content != "" {
 		return content, nil
