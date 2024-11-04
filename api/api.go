@@ -32,5 +32,10 @@ func main() {
 		graphqlHandler.ContextHandler(context.Background(), writer, request)
 	})
 
-	http.ListenAndServe(":8080", nil)
+	println("Started server on port 8080")
+	err := http.ListenAndServe(":8080", nil)
+	
+	if err != nil {
+		println("an error occured starting server")
+	}
 }
