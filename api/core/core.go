@@ -70,10 +70,8 @@ func GetOrFetch(
 	content, _ := client.Get(context, url).Result()
 
 	if content != "" {
-		println("found in cache")
 		return content, nil
 	}
-	println("not found in cache")
 
 	apiResponse, err := http.Get(url)
 	if err != nil || apiResponse.StatusCode != http.StatusOK {
