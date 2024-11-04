@@ -12,6 +12,16 @@ services:
       - "6379:6379"
     command: "redis-server --save 60 1 --loglevel warning"
   api: 
-    image: api:0.0.7
+    image: api:0.0.1
+    build: 
+      context: api
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
+  client: 
+    image: client:0.0.1
+    build: 
+      context: client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
