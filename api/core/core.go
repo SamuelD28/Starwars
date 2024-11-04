@@ -22,7 +22,7 @@ type PaginatedResponse[T any] struct {
 const SwapiUrl string = "https://swapi.dev/api"
 
 var RedisClient *redis.Client = redis.NewClient(&redis.Options{
-	Addr:     "localhost:6379",
+	Addr:     "redis_cache:6379",
 	Password: "",
 	DB:       0,
 })
@@ -70,8 +70,10 @@ func GetOrFetch(
 	content, _ := client.Get(context, url).Result()
 
 	if content != "" {
+		println("found in cache")
 		return content, nil
 	}
+	println("not found in cache")
 
 	apiResponse, err := http.Get(url)
 	if err != nil || apiResponse.StatusCode != http.StatusOK {
